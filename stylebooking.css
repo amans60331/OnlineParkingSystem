@@ -1,0 +1,122 @@
+
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #65b1ad;
+  color: rgb(247, 243, 243);
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: rgb(173, 216, 18);
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+
+
+#dt{
+    font-family:Verdana, Tahoma, sans-serif;
+}
+#parking{
+  text-align: center;
+  position: absolute ;
+  left: 300px;
+  border-collapse: separate;
+  border-spacing: 20px 20px;
+  
+}
+#abc {
+    background: linear-gradient(to bottom, #cbcbcb 2%, #fff 100%);
+    margin-top: 60px;
+    margin-left: 140px;
+    padding: 15px 30px;
+    text-align: center;
+    transition: .5s;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    color: #1b1b1b;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 30px;
+    box-shadow: 1px 4px 12px rgba(94,28,68,.15);
+    position: absolute;
+    left: 700px;
+    top: 750px;
+}
+#abcd {
+    background: linear-gradient(to bottom, #cbcbcb 2%, #fff 100%);
+    background-color: white;
+    margin-top: 160px;
+    margin-left: 140px;
+    padding: 15px 30px;
+    text-align: center;
+    transition: .5s;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    color: #1b1b1b;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 30px;
+    box-shadow: 1px 4px 12px rgba(94,28,68,.15);
+    position: absolute;
+    left: 900px;
+    top: 110px;
+}
