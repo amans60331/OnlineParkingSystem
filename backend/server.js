@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 
@@ -10,13 +9,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_FILE = path.join(__dirname, 'db.json');
 
-// Allow all origins for simplicity in free hosting deployment
-// Allow all origins for simplicity in free hosting deployment
-// Allow all origins for simplicity in free hosting deployment
-app.use(cors()); // Default is quite permissive
+// CORS - Allow all origins
+app.use(cors());
 app.use(bodyParser.json());
 
-// Persistent "Database" initialization
+// ==================== DATABASE ====================
 let db = {
     slots: Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
@@ -46,7 +43,7 @@ const saveDB = () => {
 
 loadDB();
 
-// Cleanup expired bookings periodically (Checking every 10 seconds for robustness)
+// Cleanup expired bookings periodically
 setInterval(() => {
     const now = new Date().getTime();
     let changed = false;
@@ -62,31 +59,46 @@ setInterval(() => {
         }
     });
     if (changed) saveDB();
-}, 10000); // Check every 10 seconds
+}, 10000);
 
-// Email Transporter (StartTLS for better compatibility on free hosting)
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // Use STARTTLS
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    tls: {
-        rejectUnauthorized: false
+// ==================== EMAIL (Resend API - works over HTTPS) ====================
+async function sendEmail({ to, subject, html }) {
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    if (!RESEND_API_KEY) {
+        console.warn("RESEND_API_KEY not set. Skipping email.");
+        return { success: false, error: "No API key" };
     }
-});
 
-// Verify transporter connection
-transporter.verify((error, success) => {
-    if (error) {
-        console.error("Transporter connection error:", error);
-    } else {
-        console.log("Mail server is ready to send messages");
+    try {
+        const response = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${RESEND_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                from: 'ParkOur <onboarding@resend.dev>',
+                to: [to],
+                subject: subject,
+                html: html
+            })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(`Email sent to ${to}:`, data.id);
+            return { success: true, id: data.id };
+        } else {
+            console.error("Resend API error:", data);
+            return { success: false, error: data };
+        }
+    } catch (err) {
+        console.error("Email send error:", err.message);
+        return { success: false, error: err.message };
     }
-});
+}
 
+// ==================== ROUTES ====================
 app.get('/api/availability', (req, res) => {
     res.json(db.slots);
 });
@@ -103,8 +115,8 @@ app.post('/api/bookings', async (req, res) => {
     slot.bookedUntil = new Date(Date.now() + duration * 60000);
     saveDB();
 
-    const mailOptions = {
-        from: `"ParkOur System" <${process.env.EMAIL_USER}>`,
+    // Send email (non-blocking, don't fail the booking if email fails)
+    sendEmail({
         to: email,
         subject: "Booking Success - Bay #" + slotId,
         html: `
@@ -117,14 +129,7 @@ app.post('/api/bookings', async (req, res) => {
                 <p>Enjoy your hassle-free parking!</p>
             </div>
         `
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log(`Booking email sent to ${email}`);
-    } catch (e) {
-        console.error("Mail failed for booking:", e.message);
-    }
+    });
 
     res.json({ success: true, message: 'Booking confirmed' });
 });
@@ -133,10 +138,10 @@ app.post('/api/contact', async (req, res) => {
     const { name, email, subject, message } = req.body;
     console.log(`ParkOur Contact Request: ${name} (${email})`);
 
-    const mailOptions = {
-        from: `"ParkOur Contact" <${process.env.EMAIL_USER}>`, // Sent FROM our authenticated email
-        to: process.env.EMAIL_USER, // Send TO the site owner
-        replyTo: email, // Set Reply-To as the user's email
+    const ownerEmail = process.env.OWNER_EMAIL || 'amans60331@gmail.com';
+
+    const result = await sendEmail({
+        to: ownerEmail,
         subject: `New Contact Message: ${subject || 'No Subject'}`,
         html: `
             <div style="font-family: 'Outfit', sans-serif; padding: 30px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; color: #2d3748;">
@@ -149,15 +154,12 @@ app.post('/api/contact', async (req, res) => {
                 <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
             </div>
         `
-    };
+    });
 
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log("Contact email sent successfully.");
+    if (result.success) {
         res.json({ success: true, message: 'Message received' });
-    } catch (e) {
-        console.error("Contact mail failed to send:", e.message);
-        res.status(500).json({ success: false, message: 'Failed to send message', error: e.message });
+    } else {
+        res.status(500).json({ success: false, message: 'Failed to send message' });
     }
 });
 
