@@ -12,13 +12,13 @@
     },
     {
       "id": 3,
-      "isAvailable": false,
-      "bookedUntil": "2026-02-09T22:20:27.921Z"
+      "isAvailable": true,
+      "bookedUntil": null
     },
     {
       "id": 4,
-      "isAvailable": false,
-      "bookedUntil": "2026-02-09T21:51:21.846Z"
+      "isAvailable": true,
+      "bookedUntil": null
     },
     {
       "id": 5,
