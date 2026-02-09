@@ -12,8 +12,8 @@ const DB_FILE = path.join(__dirname, 'db.json');
 
 // Allow all origins for simplicity in free hosting deployment
 // Allow all origins for simplicity in free hosting deployment
+// Allow all origins for simplicity in free hosting deployment
 app.use(cors()); // Default is quite permissive
-app.options('*', cors()); // Enable pre-flight for all routes
 app.use(bodyParser.json());
 
 // Persistent "Database" initialization
