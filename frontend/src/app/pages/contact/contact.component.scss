@@ -113,16 +113,6 @@
                     box-shadow: 0 0 0 4px rgba(72, 187, 120, 0.1);
                 }
             }
-
-            .error-msg {
-                display: block;
-                color: #ff3e3e;
-                font-size: 0.8rem;
-                margin-top: 5px;
-                font-weight: 700;
-                letter-spacing: 0.5px;
-                animation: slideDown 0.3s ease-out;
-            }
         }
 
         .success-overlay {
@@ -165,6 +155,28 @@
     }
 }
 
+// @keyframes slideDown {
+//     from {
+//         opacity: 0;
+//         transform: translateY(-10px);
+//     }
+
+//     to {
+//         opacity: 1;
+//         transform: translateY(0);
+//     }
+// }
+
+// @keyframes fadeIn {
+//     from {
+//         opacity: 0;
+//     }
+
+//     to {
+//         opacity: 1;
+//     }
+// }
+
 @media (max-width: 1024px) {
     .contact-grid {
         grid-template-columns: 1fr;
@@ -181,9 +193,23 @@
     }
 }
 
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 100px 15px 100px;
+    }
+
+    .container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
 @media (max-width: 600px) {
     .form-section {
-        padding: 30px;
+        padding: 25px;
     }
 
     .input-grid {

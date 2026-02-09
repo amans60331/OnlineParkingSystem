@@ -123,7 +123,35 @@
 }
 
 @media (max-width: 600px) {
+    .main-header {
+        padding: 10px 0;
+        bottom: 0;
+        top: auto;
+        border-radius: 24px 24px 0 0;
+    }
+
+    .header-container {
+        justify-content: center;
+    }
+
+    .logo-area,
     .header-actions {
         display: none;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: space-around;
+        background: transparent;
+
+        a {
+            padding: 10px;
+            flex-direction: column;
+            gap: 4px;
+
+            .icon {
+                font-size: 1.5rem;
+            }
+        }
     }
 }

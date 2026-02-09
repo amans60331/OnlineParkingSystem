@@ -1,0 +1,104 @@
+{
+  "slots": [
+    {
+      "id": 1,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 2,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 3,
+      "isAvailable": false,
+      "bookedUntil": "2026-02-09T22:20:27.921Z"
+    },
+    {
+      "id": 4,
+      "isAvailable": false,
+      "bookedUntil": "2026-02-09T21:51:21.846Z"
+    },
+    {
+      "id": 5,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 6,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 7,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 8,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 9,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 10,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 11,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 12,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 13,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 14,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 15,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 16,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 17,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 18,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 19,
+      "isAvailable": true,
+      "bookedUntil": null
+    },
+    {
+      "id": 20,
+      "isAvailable": true,
+      "bookedUntil": null
+    }
+  ]
+}

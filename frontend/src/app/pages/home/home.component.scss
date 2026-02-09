@@ -233,3 +233,27 @@
         margin: 0 auto;
     }
 }
+
+@media (max-width: 600px) {
+    .home-hero {
+        padding: 120px 20px 40px;
+    }
+
+    h1 {
+        font-size: 2.8rem; // Reduce font size to prevent overflow
+        margin-bottom: 20px;
+    }
+
+    .stats-card {
+        max-width: 100%; // Ensure it fits screen
+        padding: 25px; // Reduce padding
+    }
+
+    .stats-grid {
+        gap: 20px;
+    }
+
+    .stat-item .value {
+        font-size: 2rem;
+    }
+}

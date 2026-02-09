@@ -64,10 +64,24 @@ setInterval(() => {
 
 // Email Transporter (Use environment variables for production)
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Use Gmail service or configured host
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // Use SSL
     auth: {
-        user: process.env.EMAIL_USER || 'your-email@gmail.com', // Replace with Env Var
-        pass: process.env.EMAIL_PASS || 'your-app-password'     // Replace with Env Var
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+
+// Verify transporter connection
+transporter.verify((error, success) => {
+    if (error) {
+        console.error("Transporter connection error:", error);
+    } else {
+        console.log("Mail server is ready to send messages");
     }
 });
 
@@ -88,14 +102,14 @@ app.post('/api/bookings', async (req, res) => {
     saveDB();
 
     const mailOptions = {
-        from: '"ParkOur System" <no-reply@parkour.com>',
+        from: `"ParkOur System" <${process.env.EMAIL_USER}>`,
         to: email,
         subject: "Booking Success - Bay #" + slotId,
         html: `
-            <div style="font-family: sans-serif; padding: 20px; background: #0f172a; color: white;">
-                <h1 style="color: #06b6d4;">ParkOur Confirmation</h1>
+            <div style="font-family: sans-serif; padding: 20px; background: #0f172a; color: white; border-radius: 10px;">
+                <h1 style="color: #48bb78;">ParkOur Confirmation</h1>
                 <p>Your reservation for <b>Bay #${slotId}</b> is confirmed.</p>
-                <hr style="border: 0; border-top: 1px solid #1e293b;">
+                <hr style="border: 0; border-top: 1px solid #1e293b; margin: 20px 0;">
                 <p><b>Duration:</b> ${duration} Minutes</p>
                 <p><b>Amount Paid:</b> ${amount}rs</p>
                 <p>Enjoy your hassle-free parking!</p>
@@ -105,28 +119,32 @@ app.post('/api/bookings', async (req, res) => {
 
     try {
         await transporter.sendMail(mailOptions);
-    } catch (e) { console.error("Mail failed", e); }
+        console.log(`Booking email sent to ${email}`);
+    } catch (e) {
+        console.error("Mail failed for booking:", e.message);
+    }
 
     res.json({ success: true, message: 'Booking confirmed' });
 });
 
 app.post('/api/contact', async (req, res) => {
-    const { name, email, message } = req.body;
-    console.log(`ParkOur Contact: ${name} (${email}) - ${message}`);
+    const { name, email, subject, message } = req.body;
+    console.log(`ParkOur Contact Request: ${name} (${email})`);
 
     const mailOptions = {
-        from: `"${name}" <${email}>`, // Sent "from" the user's name
-        to: process.env.EMAIL_USER, // Send TO the site owner (you)
-        subject: `New Contact Message: ${req.body.subject}`, // Email Subject
-        replyTo: email,
+        from: `"ParkOur Contact" <${process.env.EMAIL_USER}>`, // Sent FROM our authenticated email
+        to: process.env.EMAIL_USER, // Send TO the site owner
+        replyTo: email, // Set Reply-To as the user's email
+        subject: `New Contact Message: ${subject || 'No Subject'}`,
         html: `
-            <div style="font-family: sans-serif; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
-                <h2 style="color: #2f855a;">New Inquiry for ParkOur</h2>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Subject:</strong> ${req.body.subject}</p>
+            <div style="font-family: 'Outfit', sans-serif; padding: 30px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; color: #2d3748;">
+                <h2 style="color: #2f855a; margin-top: 0;">New Inquiry for ParkOur</h2>
+                <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <p><strong>From:</strong> ${name} &lt;${email}&gt;</p>
+                    <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
+                </div>
                 <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 20px 0;">
-                <p style="white-space: pre-wrap;">${message}</p>
+                <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
             </div>
         `
     };
@@ -134,12 +152,11 @@ app.post('/api/contact', async (req, res) => {
     try {
         await transporter.sendMail(mailOptions);
         console.log("Contact email sent successfully.");
+        res.json({ success: true, message: 'Message received' });
     } catch (e) {
-        console.error("Contact mail failed to send:", e);
-        // We still return success to frontend to show the user "Message Sent" as we logged it
+        console.error("Contact mail failed to send:", e.message);
+        res.status(500).json({ success: false, message: 'Failed to send message', error: e.message });
     }
-
-    res.json({ success: true, message: 'Message received' });
 });
 
 app.listen(PORT, () => {

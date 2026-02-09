@@ -37,31 +37,23 @@
                     <div class="input-grid">
                         <div class="field">
                             <label>Full Name</label>
-                            <input type="text" placeholder="Gintoki" [(ngModel)]="form.name" name="name" required
-                                minlength="2">
-                            <span class="error-msg" *ngIf="errors().name">{{ errors().name }}</span>
+                            <input type="text" placeholder="Gintoki" [(ngModel)]="form.name" name="name">
                         </div>
                         <div class="field">
                             <label>Email Address</label>
-                            <input type="email" placeholder="gintoki@example.com" [(ngModel)]="form.email" name="email"
-                                required>
-                            <span class="error-msg" *ngIf="errors().email">{{ errors().email }}</span>
+                            <input type="text" placeholder="gintoki@example.com" [(ngModel)]="form.email" name="email">
                         </div>
                     </div>
                     <div class="field">
                         <label>Subject</label>
-                        <input type="text" placeholder="Inquiry about..." [(ngModel)]="form.subject" name="subject"
-                            minlength="5">
-                        <span class="error-msg" *ngIf="errors().subject">{{ errors().subject }}</span>
+                        <input type="text" placeholder="Inquiry about..." [(ngModel)]="form.subject" name="subject">
                     </div>
                     <div class="field">
                         <label>Message</label>
-                        <textarea rows="6" placeholder="Your thoughts here..." [(ngModel)]="form.message" name="message"
-                            required minlength="10"></textarea>
-                        <span class="error-msg" *ngIf="errors().message">{{ errors().message }}</span>
+                        <textarea rows="6" placeholder="Your thoughts here..." [(ngModel)]="form.message"
+                            name="message"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary full-width"
-                        [disabled]="isSending() || !contactForm.form.valid">
+                    <button type="submit" class="btn-primary full-width" [disabled]="isSending()">
                         {{ isSending() ? 'SENDING FLIGHT...' : 'SEND MESSAGE' }}
                     </button>
                 </form>

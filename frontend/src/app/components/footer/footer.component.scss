@@ -236,8 +236,14 @@
 }
 
 @media (max-width: 600px) {
+    .container {
+        padding: 40px 25px !important; // Override desktop padding
+        border-radius: 20px !important;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr;
+        gap: 50px;
     }
 
     .brand-col,
@@ -245,11 +251,27 @@
     .tech-stack-col,
     .contact-col {
         grid-column: span 1;
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .tech-tags {
+        justify-content: center;
     }
 
     .footer-bottom {
         flex-direction: column;
         gap: 20px;
         text-align: center;
+        padding-top: 30px;
+        font-size: 0.85rem;
+    }
+
+    .subscribe-form {
+        max-width: 300px;
+        margin: 15px auto 0;
     }
 }
