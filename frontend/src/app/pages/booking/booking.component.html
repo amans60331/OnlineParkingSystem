@@ -1,0 +1,90 @@
+<div class="booking-container">
+    <div class="header">
+        <span class="badge">SECURE PARKING</span>
+        <h1>Reserve Your <span class="gradient-text">ParkOur Bay</span></h1>
+        <p>Premium automated space reservation at your fingertips.</p>
+    </div>
+
+    <div class="parking-layout">
+        <div class="grid-container glass">
+            <div *ngFor="let slot of slots()" class="slot car-bay" [class.occupied]="!slot.isAvailable"
+                [class.selected]="selectedSlot()?.id === slot.id" (click)="selectSlot(slot)">
+                <div class="bay-line left"></div>
+                <div class="bay-line right"></div>
+                <div class="slot-content">
+                    <span class="slot-id">BAY #{{ slot.id }}</span>
+                    <div class="status-icon" [class.danger]="!slot.isAvailable" [class.success]="slot.isAvailable">
+                        <span *ngIf="!slot.isAvailable">🚗</span>
+                        <span *ngIf="slot.isAvailable">FREE</span>
+                    </div>
+                </div>
+                <div class="led-indicator"></div>
+            </div>
+        </div>
+
+        <!-- Booking Panel -->
+        <div class="panel-section">
+            <div class="booking-panel glass" *ngIf="selectedSlot() && !isProcessing() && !showSuccess()">
+                <div class="panel-header">
+                    <h3>Slot Booking</h3>
+                    <span class="bay-tag">Bay #{{ selectedSlot()?.id }}</span>
+                </div>
+                <hr class="divider">
+
+                <div class="form-body">
+                    <div class="field-item">
+                        <label>Duration (Minutes)</label>
+                        <div class="range-wrapper">
+                            <input type="range" min="30" max="300" step="30" [(ngModel)]="durationValue"
+                                (input)="updateDuration($event)">
+                            <div class="range-markers">
+                                <span>30m</span>
+                                <span class="current">{{ duration() }}m</span>
+                                <span>5h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-item">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" placeholder="e.g. gintoki@example.com" [(ngModel)]="email">
+                        </div>
+                    </div>
+
+                    <div class="price-summary">
+                        <span class="label">Total Amount</span>
+                        <span class="value">{{ totalPrice() }}rs</span>
+                    </div>
+
+                    <button class="btn-primary full-width" (click)="confirmBooking()">
+                        CONFIRM & PAY
+                    </button>
+                </div>
+            </div>
+
+            <!-- Processing State -->
+            <div class="booking-panel glass waiting-panel" *ngIf="isProcessing()">
+                <div class="loader-ring"></div>
+                <h3>Processing Payment</h3>
+                <p>Please do not refresh the page while we communicate with the gateway...</p>
+                <div class="secure-label">🔒 SSL SECURED PAYMENT</div>
+            </div>
+
+            <!-- Success State -->
+            <div class="booking-panel glass success-panel" *ngIf="showSuccess()">
+                <div class="success-icon">✨</div>
+                <h3>Booking Confirmed!</h3>
+                <p>A message has been sent to {{ email }}. Your Bay #{{ lastBookedId }} is ready.</p>
+                <button class="btn-outline full-width" (click)="reset()">BACK TO GRID</button>
+            </div>
+
+            <!-- Empty State -->
+            <div class="booking-panel glass empty-state" *ngIf="!selectedSlot() && !isProcessing() && !showSuccess()">
+                <div class="hint-icon">🅿️</div>
+                <h3>Ready to Park?</h3>
+                <p>Choose an available green bay from the grid to start your reservation.</p>
+            </div>
+        </div>
+    </div>
+</div>

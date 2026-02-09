@@ -1,0 +1,54 @@
+<main class="home-hero">
+    <div class="hero-content">
+        <div class="content-left">
+            <span class="badge">ESTABLISHED 2023</span>
+            <h1>Intelligent <br> <span class="gradient-text">Parking Hub</span></h1>
+            <p class="hero-description">The ultimate destination for elite, hassle free parking management. We combine
+                advanced automation with user centric design to make your urban transit smoother than ever.</p>
+
+            <div class="cta-group">
+                <button class="btn-primary" routerLink="/booking">BOOK YOUR SPACE</button>
+                <button class="btn-outline" routerLink="/about">EXPLORE TECHNOLOGY</button>
+            </div>
+
+            <div class="feature-inline">
+                <div class="f-item"><span>⚡</span> Real-time Sync</div>
+                <div class="f-item"><span>🔒</span> 100% Secure</div>
+                <div class="f-item"><span>📧</span> Smart Alerts</div>
+            </div>
+        </div>
+
+        <div class="content-right">
+            <div class="stats-card glass">
+                <div class="card-header">
+                    <div class="live-pulse"></div>
+                    <span>LIVE DASHBOARD</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="label">Total Bays</span>
+                        <span class="value">{{ stats().total }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Available Now</span>
+                        <span class="value highlight">{{ stats().available }}</span>
+                    </div>
+                    <div class="stat-item full">
+                        <span class="label">Pricing Starts at</span>
+                        <span class="value">10rs / 30m</span>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <p>System Online & Optimized</p>
+                </div>
+            </div>
+
+            <div class="floating-decoration">
+                <div class="circle c1"></div>
+                <div class="circle c2"></div>
+            </div>
+        </div>
+    </div>
+</main>

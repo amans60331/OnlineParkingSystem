@@ -1,0 +1,218 @@
+.contact-page {
+    padding: 160px 20px 80px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container {
+        max-width: 1200px;
+        width: 100%;
+        padding: 60px;
+        border-radius: 40px;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 80px;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 40px;
+    }
+
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .method-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+
+            .icon {
+                width: 50px;
+                height: 50px;
+                background: white;
+                border-radius: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.5rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            }
+
+            h4 {
+                font-size: 1rem;
+                font-weight: 800;
+                margin-bottom: 5px;
+            }
+
+            p {
+                margin-bottom: 0;
+                font-size: 0.95rem;
+            }
+        }
+    }
+
+    .form-section {
+        background: white;
+        padding: 50px;
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        min-height: 520px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .field {
+            margin-bottom: 25px;
+
+            label {
+                display: block;
+                font-size: 0.8rem;
+                font-weight: 800;
+                color: var(--text-muted);
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 15px;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                font-family: inherit;
+                outline: none;
+                transition: all 0.3s;
+
+                &:focus {
+                    border-color: var(--primary);
+                    box-shadow: 0 0 0 4px rgba(72, 187, 120, 0.1);
+                }
+            }
+        }
+
+        .success-overlay {
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+
+            .success-icon {
+                font-size: 4rem;
+                margin-bottom: 20px;
+            }
+
+            h3 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+                font-weight: 800;
+            }
+
+            p {
+                margin-bottom: 30px;
+                font-size: 1rem;
+            }
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width {
+            width: 100%;
+            font-weight: 800;
+            padding: 18px;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+}
+
+// @keyframes slideDown {
+//     from {
+//         opacity: 0;
+//         transform: translateY(-10px);
+//     }
+
+//     to {
+//         opacity: 1;
+//         transform: translateY(0);
+//     }
+// }
+
+// @keyframes fadeIn {
+//     from {
+//         opacity: 0;
+//     }
+
+//     to {
+//         opacity: 1;
+//     }
+// }
+
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .info-section {
+        text-align: center;
+    }
+
+    .contact-methods {
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 100px 15px 100px;
+    }
+
+    .container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-section {
+        padding: 25px;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+}

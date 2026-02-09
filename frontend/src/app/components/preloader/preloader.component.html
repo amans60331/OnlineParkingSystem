@@ -1,0 +1,24 @@
+<div class="preloader-overlay" *ngIf="!isFinished()">
+    <div class="loader-container">
+        <div class="radar-visual">
+            <div class="pulse pulse-1"></div>
+            <div class="pulse pulse-2"></div>
+            <div class="pulse pulse-3"></div>
+            <div class="scanner-bar"></div>
+            <div class="grid-lines"></div>
+        </div>
+
+        <div class="branding">
+            <div class="logo">PARK<span>OUR</span></div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="fill" [style.width.%]="progress()"></div>
+                </div>
+                <div class="status-row">
+                    <span class="status-msg">{{ statusMessage() }}</span>
+                    <span class="percentage">{{ progress() }}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
