@@ -1,0 +1,79 @@
+<div class="contact-page">
+    <div class="container glass">
+        <div class="contact-grid">
+            <div class="info-section">
+                <span class="badge">LET'S CONNECT</span>
+                <h1>Get in <span class="gradient-text">Touch</span></h1>
+                <p>Whether you have a question about my booking system or just want to say hi, I'm here to listen.
+                </p>
+
+                <div class="contact-methods">
+                    <div class="method-item">
+                        <span class="icon">📍</span>
+                        <div class="details">
+                            <h4>Headquarters</h4>
+                            <p>Pune</p>
+                        </div>
+                    </div>
+                    <div class="method-item">
+                        <span class="icon">📧</span>
+                        <div class="details">
+                            <h4>Email Support</h4>
+                            <p>amans60331&#64;gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="method-item">
+                        <span class="icon">📞</span>
+                        <div class="details">
+                            <h4>Direct line</h4>
+                            <p>+91 9826789575</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <form *ngIf="!showSuccess()" (submit)="sendMessage()" #contactForm="ngForm">
+                    <div class="input-grid">
+                        <div class="field">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Gintoki" [(ngModel)]="form.name" name="name" required
+                                minlength="2">
+                            <span class="error-msg" *ngIf="errors().name">{{ errors().name }}</span>
+                        </div>
+                        <div class="field">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="gintoki@example.com" [(ngModel)]="form.email" name="email"
+                                required>
+                            <span class="error-msg" *ngIf="errors().email">{{ errors().email }}</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Subject</label>
+                        <input type="text" placeholder="Inquiry about..." [(ngModel)]="form.subject" name="subject"
+                            minlength="5">
+                        <span class="error-msg" *ngIf="errors().subject">{{ errors().subject }}</span>
+                    </div>
+                    <div class="field">
+                        <label>Message</label>
+                        <textarea rows="6" placeholder="Your thoughts here..." [(ngModel)]="form.message" name="message"
+                            required minlength="10"></textarea>
+                        <span class="error-msg" *ngIf="errors().message">{{ errors().message }}</span>
+                    </div>
+                    <button type="submit" class="btn-primary full-width"
+                        [disabled]="isSending() || !contactForm.form.valid">
+                        {{ isSending() ? 'SENDING FLIGHT...' : 'SEND MESSAGE' }}
+                    </button>
+                </form>
+
+                <!-- Success Message Overlay -->
+                <div class="success-overlay" *ngIf="showSuccess()">
+                    <div class="success-icon">📬</div>
+                    <h3>Message Dispatched!</h3>
+                    <p>Thanks for reaching out me. I've received your inquiry and will get back to you shortly.</p>
+                    <button class="btn-primary" (click)="resetForm()">Send Another</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
