@@ -62,11 +62,11 @@ setInterval(() => {
     if (changed) saveDB();
 }, 10000); // Check every 10 seconds
 
-// Email Transporter (Use environment variables for production)
+// Email Transporter (StartTLS for better compatibility on free hosting)
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // Use SSL
+    port: 587,
+    secure: false, // Use STARTTLS
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
